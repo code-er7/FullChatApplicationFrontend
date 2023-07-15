@@ -23,8 +23,8 @@ import axios from "axios";
 import UserListItem from "../UserAvatar/UserListItem";
 // import { useNavigate } from "react-router-dom";
 
-const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain }) => {
-//   const navigate = useNavigate();
+const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
+  //   const navigate = useNavigate();
   const { user, selectedChat, setselectedChat } = ChatState();
   const [groupChatName, setGroupChatName] = useState();
   //    const [selectedUsers, setSelectedUsers] = useState([]);
@@ -67,11 +67,11 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain }) => {
       console.log(data);
       if (user1._id === user._id) {
         setselectedChat();
-        
       } else {
         setselectedChat(data);
       }
       setLoading(false);
+      fetchMessages();
       setFetchAgain(!fetchAgain);
     } catch (error) {
       setLoading(false);
