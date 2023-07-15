@@ -4,8 +4,10 @@ import { Box } from '@chakra-ui/react';
 import SideDrawer from '../components/miscellaneous/SideDrawer';
 import MyChats from '../components/MyChats';
 import ChatBox from '../components/ChatBox'
+import { useEffect } from 'react';
 
 const ChatPage = () => {
+ 
   const {user} =  ChatState();
   const [fetchAgain , setFetchAgain]=useState();
 

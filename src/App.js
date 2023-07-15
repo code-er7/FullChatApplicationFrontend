@@ -10,6 +10,7 @@ const App = () => {
     <Router>
       <div className="App">
         <ChatProvider>
+          
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/chats" element={<ChatPage />} />

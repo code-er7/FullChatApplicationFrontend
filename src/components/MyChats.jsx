@@ -7,7 +7,7 @@ import ChatLoading from "./ChatLoading";
 import { getSender } from "../config/ChatLogic";
 import GroupChatModal from "./miscellaneous/GroupChatModal";
 
-const MyChats = ({fetchAgain}) => {
+const MyChats = ({ fetchAgain }) => {
   const [loggedUser, setLoggedUser] = useState();
   const { user, selectedChat, setselectedChat, chats, setChats } = ChatState();
   const toast = useToast();
@@ -19,7 +19,7 @@ const MyChats = ({fetchAgain}) => {
         },
       };
       const { data } = await axios.get("/api/chat", config);
-      console.log(data);
+
       setChats(data);
     } catch (error) {
       toast({
@@ -32,7 +32,7 @@ const MyChats = ({fetchAgain}) => {
       return;
     }
   };
-  
+
   useEffect(() => {
     setLoggedUser(JSON.parse(localStorage.getItem("userInfo")));
     fetchChats();
@@ -61,13 +61,13 @@ const MyChats = ({fetchAgain}) => {
       >
         My Chats
         <GroupChatModal>
-        <Button
-          display={"flex"}
-          fontSize={{ base: "17px", md: "10px", lg: "17px" }}
-          rightIcon={<AddIcon />}
-        >
-          New Group Chat
-        </Button>
+          <Button
+            display={"flex"}
+            fontSize={{ base: "17px", md: "10px", lg: "17px" }}
+            rightIcon={<AddIcon />}
+          >
+            New Group Chat
+          </Button>
         </GroupChatModal>
       </Box>
       <Box
@@ -80,30 +80,32 @@ const MyChats = ({fetchAgain}) => {
         borderRadius={"lg"}
         overflowY={"hidden"}
       >
-        {chats ? <Stack overflowY={"scroll"}>
-            {
-              chats.map((chat)=>{
-                return(
-                  <Box
-                    onClick={()=> setselectedChat(chat)}
-                    cursor={"pointer"}
-                    bg={selectedChat===chat ? "#38B2AC" : "#E8E8E8"}
-                    color={selectedChat === chat ? "white": "black"}
-                    px={3}
-                    py={3}
-                    borderRadius={"lg"}
-                    key={chat._id}
-                  >
-                   <Text>
-                    {
-                       !chat.isGroupChat?getSender(loggedUser , chat.users):chat.chatName
-                    }
-                   </Text>
-                  </Box>
-                )
-              })
-            }
-        </Stack> : <ChatLoading />}
+        {chats ? (
+          <Stack overflowY={"scroll"}>
+            {chats.map((chat) => {
+              return (
+                <Box
+                  onClick={() => setselectedChat(chat)}
+                  cursor={"pointer"}
+                  bg={selectedChat === chat ? "#38B2AC" : "#E8E8E8"}
+                  color={selectedChat === chat ? "white" : "black"}
+                  px={3}
+                  py={3}
+                  borderRadius={"lg"}
+                  key={chat._id}
+                >
+                  <Text>
+                    {!chat.isGroupChat
+                      ? getSender(loggedUser, chat.users)
+                      : chat.chatName}
+                  </Text>
+                </Box>
+              );
+            })}
+          </Stack>
+        ) : (
+          <ChatLoading />
+        )}
       </Box>
     </Box>
   );
