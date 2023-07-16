@@ -22,6 +22,7 @@ import { Form } from "react-router-dom";
 import axios from "axios";
 import UserListItem from "../UserAvatar/UserListItem";
 import UserBadgeItem from "../UserAvatar/UserBadgeItem";
+import { server } from "../..";
 
 const GroupChatModal = ({ children }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -47,7 +48,10 @@ const GroupChatModal = ({ children }) => {
           Authorization: `Bearer ${user.token}`,
         },
       };
-      const { data } = await axios.get(`/api/user?search=${search}`, config);
+      const { data } = await axios.get(
+        `${server}/api/user?search=${search}`,
+        config
+      );
       setLoading(false);
       setSearchResult(data);
     } catch (error) {
@@ -80,7 +84,7 @@ const GroupChatModal = ({ children }) => {
             Authorization: `Bearer ${user.token}`,
           },
         };   
-        const {data}= await axios.post('api/chat/group' , {
+        const {data}= await axios.post(`${server}/api/chat/group` , {
             name : groupChatName , 
             users:JSON.stringify(selectedUsers.map((u)=>u._id)),
         } , config);

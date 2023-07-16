@@ -20,8 +20,12 @@ import "./styles.css";
 import ScrollableChat from "./ScrollableChat";
 import io from "socket.io-client";
 import animationData from "../Animations/typing.json"
+import { server } from "..";
 
-const ENDPOINT = "http://localhost:5000";
+//for dev
+// const ENDPOINT = "http://localhost:5000";
+// for production 
+const ENDPOINT = "https://talkative-7ykb.onrender.com";
 var socket, selectedChatCompare;
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
@@ -87,7 +91,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
       };
       setLoading(true);
       const { data } = await axios.get(
-        `/api/message/${selectedChat._id}`,
+        `${server}/api/message/${selectedChat._id}`,
         config
       );
 
@@ -119,7 +123,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         const temp = newMessage;
         setNewMessage("");
         const { data } = await axios.post(
-          "/api/message",
+          `${server}/api/message`,
           {
             content: temp,
             chatId: selectedChat._id,
