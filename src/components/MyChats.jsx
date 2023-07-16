@@ -8,9 +8,18 @@ import { getSender } from "../config/ChatLogic";
 import GroupChatModal from "./miscellaneous/GroupChatModal";
 
 const MyChats = ({ fetchAgain }) => {
-  const [loggedUser, setLoggedUser] = useState();
+  // const [loggedUser, setLoggedUser] = useState();
   const { user, selectedChat, setselectedChat, chats, setChats } = ChatState();
   const toast = useToast();
+
+  useEffect(() => {
+    // setLoggedUser(JSON.parse(localStorage.getItem("userInfo")));
+    // const userInfom = JSON.parse(localStorage.getItem("userInfo"));
+    // setLoggedUser(user);
+    // console.log(loggedUser);
+    // console.log(user);
+    fetchChats();
+  }, [fetchAgain ]);
   const fetchChats = async (userId) => {
     try {
       const config = {
@@ -33,10 +42,6 @@ const MyChats = ({ fetchAgain }) => {
     }
   };
 
-  useEffect(() => {
-    setLoggedUser(JSON.parse(localStorage.getItem("userInfo")));
-    fetchChats();
-  }, [fetchAgain]);
 
   return (
     <Box
@@ -96,7 +101,7 @@ const MyChats = ({ fetchAgain }) => {
                 >
                   <Text>
                     {!chat.isGroupChat
-                      ? getSender(loggedUser, chat.users)
+                      ? getSender(user, chat.users)
                       : chat.chatName}
                   </Text>
                 </Box>

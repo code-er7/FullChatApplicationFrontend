@@ -36,6 +36,7 @@ const Login = () => {
       return;
     }
     try {
+      setLoading(true);
       const config = {
         headers: {
           "Content-type": "application/json",
@@ -46,6 +47,7 @@ const Login = () => {
         { email, password },
         config
       );
+      localStorage.setItem("userInfo", JSON.stringify(data));
       toast({
         title: "Login Succesfull",
         status: "success",
@@ -53,7 +55,7 @@ const Login = () => {
         isClosable: true,
         position: "bottom",
       });
-      localStorage.setItem("userInfo", JSON.stringify(data));
+
       setLoading(false);
       navigate("/chats");
     } catch (error) {
@@ -100,7 +102,7 @@ const Login = () => {
         </InputGroup>
       </FormControl>
       <Button
-        isLoading= {loading}
+        isLoading={loading}
         colorScheme="blue"
         width={"100%"}
         style={{ margin: 15 }}
